@@ -1,14 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
     android:id="@+id/main_flipView_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@android:color/white"
     android:orientation="vertical"
-    android:tag="normal" >
+    android:tag="normal">
 
-    <com.aphidmobile.flip.FlipViewController
+    <com.yuyakaido.android.cardstackview.CardStackView
+        android:id="@+id/flipView"
+        android:layout_above="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="70dp"
+        app:elevationEnabled="true"
+        app:scaleDiff="0.05"
+        app:stackFrom="top"
+        app:swipeDirection="freedom_no_bottom"
+        app:swipeEnabled="true"
+        app:swipeThreshold="0.75"
+        app:translationDiff="20"
+        app:visibleCount="3"
+        />
+
+   <!-- <com.aphidmobile.flip.FlipViewController
         xmlns:flip="http://schemas.android.com/apk/res-auto"
         android:id="@+id/flipView"
         android:layout_width="fill_parent"
@@ -16,7 +37,7 @@
         flip:animationBitmapFormat="RGB_565"
         flip:orientation="horizontal" 
         android:layout_above="@+id/adView"/>
-
+-->
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
