@@ -32,9 +32,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.aphidmobile.flip.FlipViewController;
-import com.aphidmobile.flip.FlipViewController.ViewFlipListener;
 import com.aphidmobile.utils.UI;
+import com.getinfocia.infocia.adapter.DataAdapter;
 import com.getinfocia.infocia.db.DatabaseHelper;
 import com.getinfocia.infocia.item.ItemCategory;
 import com.getinfocia.infocia.item.Travels;
@@ -46,6 +45,8 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.squareup.picasso.Picasso;
+import com.yuyakaido.android.cardstackview.CardStackView;
+import com.yuyakaido.android.cardstackview.SwipeDirection;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -60,7 +61,7 @@ import java.util.ArrayList;
 public class FlipNewsActivity extends Activity{
 
 	DatabaseHelper dbHelper;
-	private FlipViewController flipView;
+	private CardStackView flipView;
 	MyBaseAdapter newsadapter;
 	StringBuilder sb;
 	ImageView mainGoToFirst,mainRefresh,mainCategory;
@@ -97,7 +98,7 @@ public class FlipNewsActivity extends Activity{
 		recyclerView.setLayoutManager(layoutManager);
 		textView1 = (TextView)findViewById(R.id.textView1);
 
-		flipView=(FlipViewController)findViewById(R.id.flipView);
+		flipView=(CardStackView) findViewById(R.id.flipView);
 		mainGoToFirst=(ImageView)findViewById(R.id.main_GoToFirst);
 		mainRefresh=(ImageView)findViewById(R.id.main_Refresh);
 		mainCategory=(ImageView)findViewById(R.id.language_change);
@@ -127,15 +128,17 @@ public class FlipNewsActivity extends Activity{
 
 		//		final int guid = dbHelper.getAllNewsTableInfo().getCount();
 
+        flipView.setCardEventListener(new CardStackView.CardEventListener() {
+            @Override
+            public void onCardDragging(float percentX, float percentY) {
 
-		flipView.setOnViewFlipListener(new ViewFlipListener() {
+            }
 
-			@Override
-			public void onViewFlipped(View view, int position) {
-				// TODO Auto-generated method stub
-				recyclerView.setVisibility(View.GONE);
-				relativeLayoutHeader.setVisibility(View.GONE);
-				//InterstitialAdsDisplay(position);
+            @Override
+            public void onCardSwiped(SwipeDirection direction) {
+                recyclerView.setVisibility(View.GONE);
+                relativeLayoutHeader.setVisibility(View.GONE);
+                //InterstitialAdsDisplay(position);
 
 				/*if(position == 10 || position == 20 && JsonUtils.isNetworkAvailable(FlipNewsActivity.this))
 				{
@@ -149,11 +152,50 @@ public class FlipNewsActivity extends Activity{
 					Log.e("guid",""+guid);
 					new GetOldNewsTask().execute(Constant.GET_OLD_NEWS+guid);
 				}
+            }
+
+            @Override
+            public void onCardReversed() {
+
+            }
+
+            @Override
+            public void onCardMovedToOrigin() {
+
+            }
+
+            @Override
+            public void onCardClicked(int index) {
+
+            }
+        });
+
+		/*flipView.setOnViewFlipListener(new ViewFlipListener() {
+
+			@Override
+			public void onViewFlipped(View view, int position) {
+				// TODO Auto-generated method stub
+				recyclerView.setVisibility(View.GONE);
+				relativeLayoutHeader.setVisibility(View.GONE);
+				//InterstitialAdsDisplay(position);
+
+				/*if(position == 10 || position == 20 && JsonUtils.isNetworkAvailable(FlipNewsActivity.this))
+				{
+					int guid = dbHelper.getNews_1stDataGuid();
+					new GetOldNewsTask().execute(Constant.GET_OLD_NEWS+guid);
+				}
+
+				if (JsonUtils.isNetworkAvailable(FlipNewsActivity.this))
+				{
+					int guid = dbHelper.getNews_1stDataGuid();
+					Log.e("guid",""+guid);
+					new GetOldNewsTask().execute(Constant.GET_OLD_NEWS+guid);
+				}
 
 			}
 		});
 
-
+*/
 
 		mainGoToFirst.setOnClickListener(new OnClickListener() {
 
@@ -636,14 +678,14 @@ public class FlipNewsActivity extends Activity{
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
-		flipView.onPause();
+		//flipView.onPause();
 	}
 
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		flipView.onResume();
+		//flipView.onResume();
 	}
 
 	public void InterstitialAdsDisplay(int news)
